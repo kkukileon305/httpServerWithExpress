@@ -33,6 +33,7 @@ const posts = [
 const app = express();
 app.use(express.json());
 
+// users
 const getUser = (req, res) => {
   res.json(users);
 };
@@ -48,6 +49,8 @@ const createUser = (req, res) => {
 app.get('/users', getUser);
 app.post('/users', createUser);
 
+// posts
+
 const getPost = (req, res) => {
   res.json(data);
 };
@@ -59,8 +62,23 @@ const createPost = (req, res) => {
   res.json({ message: 'postCreated' });
 };
 
+const patchPost = (req, res) => {
+  console.log(req.body);
+
+  res.json({
+    data: {
+      userId: 1,
+      userName: 'Rebekah Johnson',
+      postingId: 1,
+      postingTitle: '간단한 HTTP API 개발 시작!',
+      postingContent: '노드',
+    },
+  });
+};
+
 app.get('/posts', getPost);
 app.post('/posts', createPost);
+app.patch('/posts', patchPost);
 
 app.listen(1234, () => {
   console.log('server open!');
