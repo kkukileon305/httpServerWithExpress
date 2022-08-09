@@ -32,16 +32,34 @@ const posts = [
 const app = express();
 app.use(express.json());
 
+const getUser = (req, res) => {
+  res.json(users);
+};
+
 const createUser = (req, res) => {
   users.push(req.body);
-  console.log(users);
 
   res.json({
     message: 'userCreated',
   });
 };
 
-app.post('', createUser);
+app.get('/users', getUser);
+app.post('/users', createUser);
+
+const getPost = (req, res) => {
+  res.json(posts);
+};
+
+const createPost = (req, res) => {
+  posts.push(req.body);
+  console.log(posts);
+
+  res.json({ message: 'postCreated' });
+};
+
+app.get('/posts', getPost);
+app.post('/posts', createPost);
 
 app.listen(1234, () => {
   console.log('server is running!');
