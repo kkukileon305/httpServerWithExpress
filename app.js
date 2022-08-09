@@ -62,5 +62,5 @@ app.get('/posts', getPost);
 app.post('/posts', createPost);
 
 app.listen(1234, () => {
-  console.log('server is running!');
+  console.log('server open');
 });
