@@ -65,14 +65,10 @@ const createPost = (req, res) => {
 const patchPost = (req, res) => {
   console.log(req.body);
 
+  data[0].postingContent = '노드';
+
   res.json({
-    data: {
-      userId: 1,
-      userName: 'Rebekah Johnson',
-      postingId: 1,
-      postingTitle: '간단한 HTTP API 개발 시작!',
-      postingContent: '노드',
-    },
+    data: data[0],
   });
 };
 
