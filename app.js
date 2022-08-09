@@ -1,4 +1,5 @@
 const express = require('express');
+const { data } = require('./data');
 const users = [
   {
     id: 1,
@@ -48,7 +49,7 @@ app.get('/users', getUser);
 app.post('/users', createUser);
 
 const getPost = (req, res) => {
-  res.json(posts);
+  res.json(data);
 };
 
 const createPost = (req, res) => {
