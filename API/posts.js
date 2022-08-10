@@ -82,3 +82,10 @@ export const deletePosts = ({ body: { id } }, res) => {
     message: 'postDelete',
   });
 };
+
+// 과제 6
+export const getUserPosts = ({ params: { userId } }, res) => {
+  const id = Number(userId);
+
+  res.json(posts.filter(post => post.userId === id));
+};
