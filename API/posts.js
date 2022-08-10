@@ -87,5 +87,11 @@ export const deletePosts = ({ body: { id } }, res) => {
 export const getUserPosts = ({ params: { userId } }, res) => {
   const id = Number(userId);
 
+  if (!id) {
+    return res.status(400).json({
+      message: 'Id가 없거나 숫자가 아닙니다',
+    });
+  }
+
   res.json(posts.filter(post => post.userId === id));
 };

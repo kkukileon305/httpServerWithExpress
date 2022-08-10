@@ -1,9 +1,15 @@
 import express from 'express';
+import cors from 'cors';
 import { getUser, createUser } from './API/users.js';
 import { getPost, createPost, patchPost, deletePosts, getUserPosts } from './API/posts.js';
 
 const app = express();
 app.use(express.json());
+app.use(
+  cors({
+    origin: ['http://localhost:1235'],
+  })
+);
 
 // users
 app.get('/users', getUser);
