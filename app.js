@@ -1,5 +1,7 @@
-const express = require('express');
-const { data } = require('./data');
+import express from 'express';
+import { getUser, createUser } from './API/users.js';
+import { getPost, createPost, patchPost } from './API/posts.js';
+
 const users = [
   {
     id: 1,
@@ -34,44 +36,10 @@ const app = express();
 app.use(express.json());
 
 // users
-const getUser = (req, res) => {
-  res.json(users);
-};
-
-const createUser = (req, res) => {
-  users.push(req.body);
-
-  res.json({
-    message: 'userCreated',
-  });
-};
-
 app.get('/users', getUser);
 app.post('/users', createUser);
 
 // posts
-
-const getPost = (req, res) => {
-  res.json(data);
-};
-
-const createPost = (req, res) => {
-  posts.push(req.body);
-  console.log(posts);
-
-  res.json({ message: 'postCreated' });
-};
-
-const patchPost = (req, res) => {
-  console.log(req.body);
-
-  data[0].postingContent = '노드';
-
-  res.json({
-    data: data[0],
-  });
-};
-
 app.get('/posts', getPost);
 app.post('/posts', createPost);
 app.patch('/posts', patchPost);
