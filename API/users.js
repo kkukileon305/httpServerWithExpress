@@ -13,14 +13,29 @@ const users = [
   },
 ];
 
-export const getUser = (req, res) => {
+export const getUser = (_, res) => {
   res.json(users);
 };
 
 // 과제 1
-export const createUser = (req, res) => {
-  users.push(req.body);
-  console.log(users);
+export const createUser = ({ body: { id, name, email, password } }, res) => {
+  if (
+    !(typeof id === 'string') || //
+    !(typeof name === 'string') ||
+    !(typeof email === 'string') ||
+    !(typeof password === 'string')
+  ) {
+    return res.status(400).json({
+      message: 'body가 유효하지 않습니다.',
+    });
+  }
+
+  users.push({
+    id,
+    name,
+    email,
+    password,
+  });
 
   res.json({
     message: 'userCreated',

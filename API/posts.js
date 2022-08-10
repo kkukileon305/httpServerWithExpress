@@ -14,55 +14,69 @@ const posts = [
 ];
 
 // 과제 3
-export const getPost = (req, res) => {
+export const getPost = (_, res) => {
   res.json(posts);
 };
 
 // 과제 2
-export const createPost = (req, res) => {
-  posts.push(req.body);
-  console.log(posts);
+export const createPost = ({ body: { id, content, title, userId }, body }, res) => {
+  if (
+    !(typeof id === 'number') || //
+    !(typeof content === 'string') ||
+    !(typeof title === 'string') ||
+    !(typeof userId === 'number')
+  ) {
+    return res.status(400).json({
+      message: 'body가 유효하지 않습니다.',
+    });
+  }
+
+  posts.push(body);
 
   res.json({ message: 'postCreated' });
 };
 
 // 과제 4
-export const patchPost = ({ body: { postingId, content } }, res) => {
-  if (!(typeof postingId === 'number') || !(typeof content === 'string')) {
+export const patchPost = ({ body: { id, content, title, userId } }, res) => {
+  if (!(typeof id === 'number') || !(typeof content === 'string')) {
     return res.status(400).json({
-      message: 'postingId나 content가 유효하지 않습니다.',
+      message: 'id나 content가 유효하지 않습니다.',
     });
   }
 
-  if (postingId > posts.length) {
+  if (id > posts.length) {
     return res.status(400).json({
-      message: 'postingId가 현재 posts개수보다 큽니다',
+      message: 'id가 현재 posts개수보다 큽니다',
     });
   }
 
-  posts[postingId - 1].content = content;
+  posts[id - 1] = {
+    id,
+    title,
+    userId,
+    content,
+  };
 
   res.status(202).json({
-    posts: posts[postingId - 1],
+    posts: posts[id - 1],
   });
 };
 
 // 과제 5
-export const deletePosts = ({ body: { postingId } }, res) => {
-  if (!(typeof postingId === 'number')) {
+export const deletePosts = ({ body: { id } }, res) => {
+  if (!(typeof id === 'number')) {
     return res.status(400).json({
-      message: 'postingId가 없거나 숫자가 아닙니다',
+      message: 'id가 없거나 숫자가 아닙니다',
     });
   }
 
-  if (postingId > posts.length) {
+  if (id > posts.length) {
     return res.status(400).json({
-      message: 'postingId가 현재 posts개수보다 큽니다',
+      message: 'id가 현재 posts개수보다 큽니다',
     });
   }
 
-  posts.splice(postingId - 1);
-  console.log(posts);
+  posts.splice(id - 1);
 
   res.json({
     message: 'postDelete',
