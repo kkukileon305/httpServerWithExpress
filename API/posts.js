@@ -59,19 +59,43 @@ export const createPost = (req, res) => {
 
 // 과제 4
 export const patchPost = (req, res) => {
-  console.log(req.body);
+  const { postingId } = req.body;
 
-  data[0].postingContent = '노드';
+  if (!(typeof postingId === 'number')) {
+    return res.status(400).json({
+      message: 'postingId가 없거나 숫자가 아닙니다',
+    });
+  }
+
+  if (postingId > posts.length) {
+    return res.status(400).json({
+      message: 'postingId가 현재 posts개수보다 큽니다',
+    });
+  }
+
+  data[postingId].postingContent = '노드';
 
   res.status(202).json({
-    data: data[0],
+    data: data[postingId],
   });
 };
 
 // 과제 5
-export const deletePosts = (req, res) => {
-  posts.splice(0);
-  console.log(posts, '전부 삭제함');
+export const deletePosts = ({ body: { postingId } }, res) => {
+  if (!(typeof postingId === 'number')) {
+    return res.status(400).json({
+      message: 'postingId가 없거나 숫자가 아닙니다',
+    });
+  }
+
+  if (postingId > posts.length) {
+    return res.status(400).json({
+      message: 'postingId가 현재 posts개수보다 큽니다',
+    });
+  }
+
+  posts.splice(postingId - 1);
+  console.log(posts);
 
   res.json({
     message: 'postDelete',

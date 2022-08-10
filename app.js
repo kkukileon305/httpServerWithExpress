@@ -7,7 +7,7 @@ app.use(express.json());
 
 // users
 app.get('/users', getUser);
-app.post('/users', createUser);
+app.post('/users', createUser); // 과제 1
 
 // posts
 app.get('/posts', getPost); // 과제 3
