@@ -1,34 +1,3 @@
-const data = [
-  {
-    userID: 1,
-    userName: 'Rebekah Johnson',
-    postingId: 1,
-    postingTitle: '간단한 HTTP API 개발 시작!',
-    postingContent: 'Node.js에 내장되어 있는 http 모듈을 사용해서 HTTP server를 구현.',
-  },
-  {
-    userID: 2,
-    userName: 'Fabian Predovic',
-    postingId: 2,
-    postingTitle: 'HTTP의 특성',
-    postingContent: 'Request/Response와 Stateless!!',
-  },
-  {
-    userID: 3,
-    userName: 'new user 1',
-    postingId: 3,
-    postingImageUrl: '내용 1',
-    postingContent: 'sampleContent3',
-  },
-  {
-    userID: 4,
-    userName: 'new user 2',
-    postingId: 4,
-    postingImageUrl: '내용 2',
-    postingContent: 'sampleContent4',
-  },
-];
-
 const posts = [
   {
     id: 1,
@@ -46,7 +15,7 @@ const posts = [
 
 // 과제 3
 export const getPost = (req, res) => {
-  res.json(data);
+  res.json(posts);
 };
 
 // 과제 2
@@ -58,12 +27,10 @@ export const createPost = (req, res) => {
 };
 
 // 과제 4
-export const patchPost = (req, res) => {
-  const { postingId } = req.body;
-
-  if (!(typeof postingId === 'number')) {
+export const patchPost = ({ body: { postingId, content } }, res) => {
+  if (!(typeof postingId === 'number') || !(typeof content === 'string')) {
     return res.status(400).json({
-      message: 'postingId가 없거나 숫자가 아닙니다',
+      message: 'postingId나 content가 유효하지 않습니다.',
     });
   }
 
@@ -73,10 +40,10 @@ export const patchPost = (req, res) => {
     });
   }
 
-  data[postingId].postingContent = '노드';
+  posts[postingId - 1].content = content;
 
   res.status(202).json({
-    data: data[postingId],
+    posts: posts[postingId - 1],
   });
 };
 
