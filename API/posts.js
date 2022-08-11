@@ -13,9 +13,10 @@ const posts = [
   },
 ];
 
+let postingId = 3;
+
 // 과제 3 + 6
 export const getPost = ({ query: { userId } }, res) => {
-  console.log(typeof userId);
   const userIdNumber = Number(userId);
 
   if (!Number.isNaN(userIdNumber)) {
@@ -26,10 +27,10 @@ export const getPost = ({ query: { userId } }, res) => {
 };
 
 // 과제 2
-export const createPost = ({ body: { id, content, title, userId }, body }, res) => {
+export const createPost = ({ body: { content, title, userId }, body }, res) => {
   if (
-    !(typeof id === 'number') || //
     !(typeof content === 'string') ||
+    //
     !(typeof title === 'string') ||
     !(typeof userId === 'number')
   ) {
@@ -38,7 +39,12 @@ export const createPost = ({ body: { id, content, title, userId }, body }, res) 
     });
   }
 
-  posts.push(body);
+  posts.push({
+    id: postingId++,
+    title,
+    content,
+    userId,
+  });
 
   res.json({ message: 'postCreated' });
 };
